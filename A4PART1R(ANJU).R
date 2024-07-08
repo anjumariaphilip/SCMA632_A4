@@ -1,0 +1,43 @@
+install.packages(c("dplyr", "psych", "tidyr", "GPArotation", "FactoMineR", "factoextra", "pheatmap"))
+library(dplyr)
+library(psych)
+library(tidyr)
+library(GPArotation)
+library(FactoMineR)
+library(factoextra)
+library(pheatmap)
+setwd("C:\\Users\\HP\\Documents\\ns")
+data <- read.csv("Survey.csv", header = TRUE)
+
+dim(data) 
+names(data) 
+head(data) 
+str(data)
+
+is.na(data) 
+sum(is.na(data)) 
+sur_int=data[,18:46] 
+str(sur_int) 
+dim(sur_int) 
+library(GPArotation) 
+pca <- principal(sur_int,5,n.obs =162, rotate ="promax") 
+pca 
+
+om.h<-omega(sur_int,n.obs=162,sl=FALSE) 
+op<-par(mfrow=c(1,1)) 
+om<-omega(sur_int,n.obs=162) 
+library(FactoMineR) 
+pca<-PCA(sur_int,scale.unit = TRUE) 
+summary(pca) 
+biplot(pca, scale = 0) 
+str(sur_int) 
+dim(sur_int) 
+show(sur_int) 
+
+
+factor_analysis<-fa(sur_int,nfactors = 4,rotate = "varimax") 
+names(factor_analysis) 
+print(factor_analysis$loadings,reorder=TRUE) 
+fa.diagram(factor_analysis) 
+print(factor_analysis$communality) 
+print(factor_analysis$scores) 
